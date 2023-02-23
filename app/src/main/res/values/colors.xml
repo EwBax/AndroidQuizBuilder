@@ -11,4 +11,5 @@
     <color name="buttonColorRegular">#0F434F</color>
     <color name="buttonColorCorrect">#749D34</color>
     <color name="buttonColorIncorrect">#AA4639</color>
+    <color name="buttonColorDisabled">#515252</color>
 </resources>

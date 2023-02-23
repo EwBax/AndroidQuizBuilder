@@ -4,9 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.util.Log;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.*;
@@ -14,7 +13,6 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView welcomeTV;
     Button startBtn;
 
     @Override
@@ -22,41 +20,37 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        welcomeTV = findViewById(R.id.welcomeTV);
         startBtn = findViewById(R.id.startBtn);
 
         // adding listener to progress to next activity
-        startBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        startBtn.setOnClickListener(v -> {
 
-                try {
+            try {
 
-                    // calling method to read from raw file
-                    String delimitedQuizData = readQuizFile();
+                // calling method to read from raw file
+                String delimitedQuizData = readQuizFile();
 
-                    // Creating array lists to store definitions and terms in parallel
-                    ArrayList<String> definitions = new ArrayList<>();
-                    ArrayList<String> terms = new ArrayList<>();
+                // Creating array lists to store definitions and terms in parallel
+                ArrayList<String> definitions = new ArrayList<>();
+                ArrayList<String> terms = new ArrayList<>();
 
-                    // Calling method to split quiz data
-                    splitQuizData(delimitedQuizData, definitions, terms);
+                // Calling method to split quiz data
+                splitQuizData(delimitedQuizData, definitions, terms);
 
-                    // Creating intent for next activity
-                    Intent quizActivity = new Intent(MainActivity.this, QuizActivity.class);
+                // Creating intent for next activity
+                Intent quizActivity = new Intent(MainActivity.this, QuizActivity.class);
 
-                    // bundling definitions and terms
-                    quizActivity.putStringArrayListExtra("definitions", definitions);
-                    quizActivity.putStringArrayListExtra("terms", terms);
+                // bundling definitions and terms
+                quizActivity.putStringArrayListExtra("definitions", definitions);
+                quizActivity.putStringArrayListExtra("terms", terms);
 
-                    // starting next activity
-                    startActivity(quizActivity);
+                // starting next activity
+                startActivity(quizActivity);
 
-                } catch (QuizNotReadException e) {
-                    Toast.makeText(getApplicationContext(), "Error: Could not read quiz from file. Please restart app.", Toast.LENGTH_LONG).show();
-                } // end try/catch
+            } catch (QuizNotReadException e) {
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.quizNotReadMessage), Toast.LENGTH_LONG).show();
+            } // end try/catch
 
-            }
         }); //end onClickListener
 
     } //end onCreate method
@@ -65,10 +59,12 @@ public class MainActivity extends AppCompatActivity {
     // Method to split and sort definitions and terms appropriately
     private void splitQuizData(String delimitedQuizData, ArrayList<String> definitions, ArrayList<String> terms) {
 
+        // Splitting on either $ or \n
         String[] temp = delimitedQuizData.split("[\\$|\\n]");
 
         // Looping and storing each definition and term
         // definitions are at even indices and terms are odd
+        // incrementing i by 2 each time to get pairs of def and term
         for (int i = 0; i < temp.length; i+=2) {
 
             definitions.add(temp[i]);
@@ -84,26 +80,28 @@ public class MainActivity extends AppCompatActivity {
 
         // Method body based on "Demo - Internal Read Write & Res Raw Read" by David Russell
 
-        String temp = null;
+        String temp;
         StringBuilder delimitedQuizData = new StringBuilder();
-        BufferedReader br = null;
+        BufferedReader br;
 
         try {
             InputStream is = getResources().openRawResource(R.raw.quiz);
             br = new BufferedReader(new InputStreamReader(is));
-            System.out.println("Quiz file in RAW is open");
+            Log.i("readQuizFile method", "Quiz file in RAW is open");
 
             while ((temp = br.readLine()) != null) {
                 delimitedQuizData.append(temp);
                 delimitedQuizData.append("\n");
             }
             is.close();
-            System.out.println("Quiz file in RAW is closed");
+            Log.i("readQuizFile method", "Quiz file in RAW is closed");
 
         } catch (IOException e) {
+            Log.e("readQuizFile Method", e.getMessage(), e);
             e.printStackTrace();
             throw new QuizNotReadException();
-        }catch(Exception e){
+        }catch (Exception e){
+            Log.e("readQuizFile Method", e.getMessage(), e);
             e.printStackTrace();
             throw new QuizNotReadException();
         } // end try/catch

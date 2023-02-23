@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Flash Quiz</string>
-    <string name="welcomeText">Welcome to the Quiz App!</string>
+    <string name="welcomeText">Welcome to Flash Quiz!</string>
     <string name="startQuiz">Start Quiz</string>
-    <string name="questionNumber">Question 1/10</string>
+    <string name="questionNumber">Question</string>
     <string name="definition">Definition</string>
     <string name="termText">Term</string>
     <string name="next">Next</string>
@@ -10,4 +10,6 @@
     <string name="score">0/10</string>
     <string name="tryAgain">Try Again?</string>
     <string name="quit">Quit</string>
+    <string name="lotrEdition">Lord of the Rings Edition!</string>
+    <string name="quizNotReadMessage">Error: Could not read quiz from file. Please restart app.</string>
 </resources>

@@ -1,10 +1,10 @@
-def1$term1
-def2$term2
-def3$term3
-def4$term4
-def5$term5
-def6$term6
-def7$term7
-def8$term8
-def9$term9
-def10$term10
+The name of the Elven city in which the fellowship is formed$Rivendell
+The lost Dwarven city where the fellowship awakens a Balrog$Khazad-dûm
+Fortress where the citizens of Rohan make their last stand against the Orc army$Helm's Deep
+Where Frodo must take the Ring to destroy it$Mount Doom
+The home of the Hobbits$The Shire
+The capital city of Gondor$Minas Tirith
+Ancient human civilization that Aaragorn is a decendant of$Númenor
+The home of the elves and the Valar, also known as the Grey Havens$Valinor
+The town where the Hobbits first meet Aaragorn$Bree
+Saruman's base of operations where he builds his army$Isengard
